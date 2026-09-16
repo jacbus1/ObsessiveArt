@@ -7,6 +7,7 @@ there is no isolated renderer, mock storage, or manufactured screenshot fallback
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -33,7 +34,7 @@ def click(page, action, scope='#app'):
 
 
 def settled(page):
-    expect(page.locator('#save-status')).to_have_class('save-status', timeout=15000)
+    expect(page.locator('#save-status')).to_have_class(re.compile(r'^save-status\s*$'), timeout=15000)
     page.evaluate('document.fonts.ready')
 
 
