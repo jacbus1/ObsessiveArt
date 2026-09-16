@@ -26,7 +26,7 @@ def snapshot(page):
 
 
 def click(page, action, scope='#app'):
-    page.locator(f'{scope} [data-action="{action}"]').first.click()
+    page.locator(f'{scope} button[data-action="{action}"]').first.click()
 
 
 def record(name):
