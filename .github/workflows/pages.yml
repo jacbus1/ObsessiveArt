@@ -1,25 +1,66 @@
 name: Deploy to GitHub Pages
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/pages.yml
+      - index.html
+      - style.css
+      - src/**
+      - assets/**
+      - sw.js
+      - manifest.webmanifest
+      - scripts-build.mjs
+      - package.json
 permissions:
   contents: read
-  pages: write
-  id-token: write
 concurrency:
   group: pages
   cancel-in-progress: false
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
+      - name: Check first-time Pages setup
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh api "repos/${GITHUB_REPOSITORY}/pages" > /tmp/obsessiveart-pages.json; then
+            echo '::error::GitHub Pages is not enabled or not accessible. Open repository Settings > Pages, select GitHub Actions, then run this workflow again. The workflow token cannot grant itself repository administration permission.'
+            exit 1
+          fi
       - run: npm run check && npm test && npm run build
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - run: python -m pip install playwright==1.57.0
+      - run: python -m playwright install --with-deps chromium
+      - name: Test application before publication
+        run: |
+          node server.mjs > /tmp/obsessiveart-pages.log 2>&1 &
+          ready=0
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/healthz; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" = 1
+          python tests/browser_test.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -27,3 +68,16 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published HTML and core module
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          for i in $(seq 1 12); do
+            if curl --fail --silent --show-error --location "${SITE_URL}" -o /tmp/obsessiveart-live.html && grep -q 'src/app.js' /tmp/obsessiveart-live.html && curl --fail --silent --show-error "${SITE_URL%/}/src/core.js" -o /tmp/obsessiveart-live-core.js && grep -q 'seedWorkspace' /tmp/obsessiveart-live-core.js; then
+              echo "Published site responded successfully: ${SITE_URL}"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo '::error::Deployment completed but public HTTP verification did not pass.'
+          exit 1
