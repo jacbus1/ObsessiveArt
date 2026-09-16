@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtempSync, rmSync, statSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { DatabaseSync } from 'node:sqlite';
+import { Store } from '../server/store.mjs';
+import { starterWorkspace } from '../public/model.mjs';
+function temp(t){const dir=mkdtempSync(join(tmpdir(),'obsessart-test-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));return dir;}
+test('acknowledged writes survive closing and reopening the database',t=>{const path=join(temp(t),'store.sqlite');let s=new Store(path);const w=s.read().workspace;w.notes[0].body='Durable content';const ack=s.write(w,0);assert.equal(ack.revision,1);s.close();s=new Store(path);assert.equal(s.read().workspace.notes[0].body,'Durable content');assert.equal(s.read().revision,1);s.close();assert.equal(statSync(path).mode&0o777,0o600);});
+test('two database handles cannot silently overwrite each other',t=>{const path=join(temp(t),'store.sqlite');const a=new Store(path),b=new Store(path);const wa=a.read().workspace,wb=b.read().workspace;wa.title='Writer A';wb.title='Writer B';a.write(wa,0);assert.throws(()=>b.write(wb,0),{status:409});assert.equal(b.read().workspace.title,'Writer A');a.close();b.close();});
+test('invalid data rolls back without advancing the revision',()=>{const s=new Store(':memory:');const w=s.read().workspace;w.notes[0].title='';assert.throws(()=>s.write(w,0));assert.equal(s.read().revision,0);s.close();});
+test('workspace identity cannot be replaced during a normal edit',()=>{const s=new Store(':memory:');const w=s.read().workspace;w.id='different';assert.throws(()=>s.write(w,0),{status:422});s.close();});
+test('revision precondition is mandatory and integer-valued',()=>{const s=new Store(':memory:');for(const rev of [undefined,null,'0',NaN,-1])assert.throws(()=>s.write(s.read().workspace,rev),{status:422});s.close();});
+test('history retains exactly the latest 50 snapshots',()=>{const s=new Store(':memory:');const w=s.read().workspace;for(let i=0;i<55;i++){w.title=`Edit ${i}`;s.write(w,i);}assert.equal(s.history().length,50);assert.equal(s.history()[0].revision,55);assert.equal(s.history().at(-1).revision,6);assert.throws(()=>s.read(0),{status:404});s.close();});
+test('backup import preserves notes, board placements, tags and links',()=>{const a=new Store(':memory:'),b=new Store(':memory:');const id=b.read().workspace.id;const backup=a.export();b.importBackup(backup,0);const imported=b.read().workspace;assert.equal(imported.id,id);assert.deepEqual(imported.notes,backup.workspace.notes);assert.deepEqual(imported.boards,backup.workspace.boards);a.close();b.close();});
+test('a changed backup checksum is rejected before replacing data',()=>{const s=new Store(':memory:');const backup=s.export();backup.workspace.notes[0].body='tampered';assert.throws(()=>s.importBackup(backup,0),{status:422});assert.equal(s.read().revision,0);s.close();});
+test('unsupported backup version and stale imports are rejected',()=>{const s=new Store(':memory:');const backup=s.export();assert.throws(()=>s.importBackup({...backup,formatVersion:999},0),{status:422});s.write(s.read().workspace,0);assert.throws(()=>s.importBackup(backup,0),{status:409});s.close();});
+test('history restore creates a new monotonic revision',()=>{const s=new Store(':memory:');const original=s.read().workspace;const altered=structuredClone(original);altered.title='Edited';s.write(altered,0);s.write(s.read(0).workspace,1,'restore');assert.equal(s.read().revision,2);assert.deepEqual(s.read().workspace,original);s.close();});
+test('SQLite online backup opens independently with the saved history',async t=>{const dir=temp(t),s=new Store(join(dir,'live.sqlite'));s.write(s.read().workspace,0);await s.backupTo(join(dir,'backup.sqlite'));const restored=new Store(join(dir,'backup.sqlite'));assert.deepEqual(restored.read(),s.read());assert.equal(restored.history().length,2);restored.close();s.close();});
+test('a newer database schema fails closed',t=>{const path=join(temp(t),'new.sqlite');const db=new DatabaseSync(path);db.exec('PRAGMA user_version=99');db.close();assert.throws(()=>new Store(path),/newer/);});
+test('SQL-shaped user text is stored as content, not executed',()=>{const s=new Store(':memory:');const w=s.read().workspace;w.notes[0].body="'); DROP TABLE snapshots; --";s.write(w,0);assert.equal(s.read().workspace.notes[0].body,w.notes[0].body);assert.equal(s.history().length,2);s.close();});

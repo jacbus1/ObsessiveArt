@@ -1,0 +1,14 @@
+.git
+.github
+.env
+.env.*
+data
+backups
+exports
+node_modules
+.venv
+**/__pycache__
+*.sqlite*
+*.log
+test-results
+playwright-report

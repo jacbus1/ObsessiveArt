@@ -1,0 +1,2 @@
+# Optional browser test tooling; not an application runtime dependency.
+playwright==1.57.0

@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    init: true
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PUBLIC_URL: ${PUBLIC_URL:?Set the HTTPS public origin in .env}
+      OBSESSART_PASSWORD: ${OBSESSART_PASSWORD:?Set a unique owner password in .env}
+    ports:
+      - "127.0.0.1:4173:4173"
+    volumes:
+      - obsessart-data:/app/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 128
+    mem_limit: 512m
+volumes:
+  obsessart-data:

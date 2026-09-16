@@ -1,0 +1,16 @@
+{
+  "name": "obsessart",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A personal workspace for linked notes, visual boards and connected thinking.",
+  "type": "module",
+  "engines": { "node": ">=22.16.0" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/index.mjs",
+    "dev": "node --env-file-if-exists=.env --watch server/index.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "backup": "node --env-file-if-exists=.env scripts/backup.mjs"
+  },
+  "license": "MIT"
+}
