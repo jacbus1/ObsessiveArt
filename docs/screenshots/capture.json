@@ -1,0 +1,103 @@
+{
+  "capturedAt": "2026-09-16T04:45:27.217218+00:00",
+  "commit": "82ad684a98f9366a9da73d640b8e4bd534205f43",
+  "browser": "Chromium 143.0.7499.4",
+  "method": "Real HTTP browser navigation; ordinary UI controls; fresh disposable profiles; no mock storage.",
+  "content": "Bundled synthetic learning notes; English translations imported through the normal JSON restore flow. No private notes or user profiles.",
+  "notEvidenceOf": [
+    "public website deployment",
+    "cross-device sync",
+    "physical mobile testing",
+    "production security certification"
+  ],
+  "runtimeSha256": {
+    "index.html": "446f61d05943ddd7d871d5538392b861eb047b48abe57c8eeaab18e521940710",
+    "style.css": "6fd15ad7bf956a1f77779df12f6b130ad35783b99c94a574b7846ba1689db007",
+    "src/app.js": "fdcda98f370690bd5ad001d0499ff5fc5a1b9c192cb5a932023c95374a116dc5",
+    "src/core.js": "eada3adc962821dea81a15c6dee6df8e9e32416b340e57075fc38ce71724e1e0",
+    "src/storage.js": "d46f3794f4d17ca55302f3a434cf37a46aa0d32e289e8e7f3f2263e9d0c5d3bc",
+    "sw.js": "3871dabf115fc692dde2313a59653ca750585e82b661c4b614dd83561e54a12e"
+  },
+  "images": [
+    {
+      "file": "whiteboard-en.png",
+      "sha256": "c190f909cb8c64f51c677322ce5c1787bcfdac59f99a209d594cfb39eddbfb0f",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "editor-en.png",
+      "sha256": "6256c20ea606ce7ac6a6360bba3c680c8b19e999838415881234fae5c496a129",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "graph-en.png",
+      "sha256": "c57b94138c317c56c150ed467f54efa61e4adfb5528281b5c11335a01fac3bd9",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "settings-en.png",
+      "sha256": "e694c0141cc96badc10980dd13d4693c12f1059c3cb9c1eda4eb201144ca0ee2",
+      "viewport": {
+        "width": 1440,
+        "height": 1200
+      }
+    },
+    {
+      "file": "mobile-en.png",
+      "sha256": "3421ca31923c2b986df4e13338032cfce8616bc2b40819d96a5a26734b1abb7b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "whiteboard-zh-Hant.png",
+      "sha256": "7d7e9e59ee0a0f752155e883979da4732a2b4e2be8b679fdcad9839e080b13f1",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "editor-zh-Hant.png",
+      "sha256": "546df20bd42c32a51addd1d8413ed72af269c38808866096ed09d9e7da2b27b7",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "graph-zh-Hant.png",
+      "sha256": "05917ae32b7c2aed79d6de430ef245886f86f8b1a0e51669fc541f941db2d2d3",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "file": "settings-zh-Hant.png",
+      "sha256": "e791c7901c401fcadd683006b01754c4c7ff9597872ed7c43d2dc8cca797dcca",
+      "viewport": {
+        "width": 1440,
+        "height": 1200
+      }
+    },
+    {
+      "file": "mobile-zh-Hant.png",
+      "sha256": "51e4298de1b89e712c0144c1f8e0d3a06a0ef8544485c3f01f3d632287037423",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ]
+}
