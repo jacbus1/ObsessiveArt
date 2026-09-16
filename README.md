@@ -1,62 +1,76 @@
 # ObsessiveArt
 
-Local-first knowledge workspace combining linked notes, visual whiteboards, and knowledge graphs.
+[繁體中文](README.zh-Hant.md) · [Architecture](docs/ARCHITECTURE.md) · [Security](SECURITY.md)
 
-[繁體中文](README.zh-Hant.md)
+**Linked notes. Visual canvases. A knowledge graph. One local workspace.**
 
-## Current status
+ObsessiveArt is a working, single-user, local-first web application inspired by the workflows of Obsidian, Miro and Heptabase. It is independently implemented, not affiliated with those products, and does not include their proprietary code.
 
-**Research and engineering specifications; application implementation has not started in this repository.** The production-ready application is the goal, not a claim about this commit. The 50 proposed acceptance cases are all `not_run`; no application build, browser test, concurrency test, import/export round trip, backup restore, security audit or deployment is claimed.
+## Run it now
 
-This repository publishes the latest research/specification bundle reviewed on **2026-09-15**. The English and Traditional Chinese documentation are kept separate. No user notes, screenshots, private PDFs, credentials or workspace datasets are included.
+Install Node.js 22 or newer, then:
 
-## Product direction
-
-An independent application inspired by the workflows of Obsidian, Miro and Heptabase, not a merger of their proprietary code or a plugin that embeds their services. One knowledge model supports document editing, spatial whiteboards and relationship exploration. A card on a board references a note; it is not a second canonical copy.
-
-The first proposed production boundary is self-hosted personal and small-team use. Candidate components and architecture decisions remain subject to implementation spikes, exact-version license review and acceptance evidence.
-
-## Documentation
-
-| Document | Purpose |
-|---|---|
-| [Traditional Chinese research](docs/RESEARCH.zh-Hant.md) | Product comparison, recommended direction and scope |
-| [Architecture decisions](docs/ARCHITECTURE.md) | Identity, canonical content, persistence, collaboration and deployment |
-| [Interchange contract](docs/INTERCHANGE.md) | Native backups, Markdown/JSON Canvas and migration fidelity |
-| [Production gates](docs/PRODUCTION_GATES.md) | Evidence required before claiming production readiness |
-| [Implementation backlog](docs/IMPLEMENTATION_BACKLOG.md) | Dependency-ordered milestones and engineering handoff |
-| [License review](docs/LICENSE_REVIEW.md) | Licensing observations and exact-version review requirements |
-| [Primary sources](docs/SOURCES.md) | 38 source records and evidence limits |
-| [Acceptance cases](specs/acceptance-cases.json) | 50 proposed, unexecuted application cases |
-| [Machine-readable sources](specs/sources.json) | Source registry |
-| [Status](STATUS.json) | Scope and verification status of this repository snapshot |
-
-`PACKAGE_MANIFEST.json` records file sizes and SHA-256 hashes. Documentation consistency and upload verification are not application tests. Statements in the dated research about work not performed describe the original research round; GitHub publication is recorded by this repository's commit history.
-
-## First implementation milestone
-
-Create one note, reference it from two boards, navigate to it in the graph, edit it offline, reopen it and export/restore into a clean workspace. The note body must remain shared while board positions remain independent. Only claim behavior that has been tested on the actual implementation.
-
-## Proposed application layout
-
-```text
-apps/web/                 Browser UI and offline shell
-apps/server/              API, auth and WebSocket service
-apps/worker/              Import, index, export and file processing
-apps/desktop/             Later native filesystem bridge
-packages/domain/          Stable identity and command contracts
-packages/editor/          Note/block editing adapter
-packages/canvas/          Spatial rendering and interactions
-packages/graph/           Derived relationship views
-packages/sync/            CRDT, receipts and recovery
-packages/interchange/     Versioned backup/import/export adapters
-packages/ui/              Accessible shared components and locales
-tests/                    Unit, integration, browser and failure suites
-infra/                    Deployment, backup and restore configuration
+```sh
+git clone https://github.com/jacbus1/ObsessiveArt.git
+cd ObsessiveArt
+npm start
 ```
 
-These directories are proposed, not included as runnable application code. There is no app startup command or live service in this documentation commit. Source publication, application implementation and production deployment are separate milestones.
+Open **http://localhost:4173**. There is **no `npm install` step**, no API key, no account and no external database. Do not double-click `index.html`; ES modules and browser storage need a web origin. Use the same URL, browser and port on subsequent visits.
 
-## Rights and data separation
+## What works in v0.1.0
 
-Keep source code independent of private workspace content. Upstream applications and dependencies retain their rights and licenses. No root software license has been selected by this research publication, and it does not relicense third-party code. Do not commit provider keys, local credentials, reference screenshots or personal exports.
+- **Notes:** Markdown editing and safe preview, split view, titles, tags, pinning, full-text search, `[[wikilinks]]`, stable-ID link insertion, backlinks, 25 editing-session snapshots and trash/restore.
+- **Canvases:** multiple boards; reuse the same note without copying its body; drag, pan, zoom, resize, Shift multi-select/box-select, sticky notes, frames with enclosed-card movement, labeled visual connectors, image/PDF attachments, structural undo/redo and SVG export.
+- **Graph:** derived from note links (not canvas arrows), text/tag filtering, local-neighborhood view and clickable note nodes. Rendering is capped at 200 notes per view.
+- **Data:** actual IndexedDB transactions with stale-writer rejection, previous-commit recovery copy, full JSON backup/restore, previewed multi-file Markdown import, readable Markdown/attachment ZIP export, offline app-shell caching, English/Traditional Chinese and light/dark mode.
+
+The sample notes are editable examples, not screenshots. Edit the PCA card and switch to the second canvas: its content is shared while placement remains independent.
+
+## Important data boundaries
+
+**Your content stays in this browser.** Publishing source code or hosting this application does not publish your notes. This version does not upload note data, use analytics, load runtime libraries from CDNs, or call AI services.
+
+Browser storage is not an external backup. Clearing site data, using a private window, changing browser/domain/port, or device failure can make content unavailable. Download a **full JSON backup** regularly and verify it. Markdown ZIP is a readable export, not a full-fidelity backup. Your data is not encrypted by an application-level encryption scheme.
+
+When two tabs race, a stale writer is rejected instead of silently overwriting newer data. The app pauses saving and offers a backup; export unsaved work before reloading. This is **not real-time multiplayer or cross-device sync**.
+
+## Scope and release status
+
+**Usable local-first v0.1.0; not a claim of complete Obsidian/Miro/Heptabase parity or enterprise production certification.** There is no account system, cloud sync, multiplayer, AI, OCR, full PDF reader/highlight anchors, handwriting, arbitrary rich-text blocks, or lossless Miro/Heptabase importer. Attachments can be displayed as images or downloaded; PDF attachments are not parsed. Markdown supports a documented subset; raw HTML never executes. Edits are plain Markdown rather than a third-party WYSIWYG editor.
+
+Structural Undo history is in memory and resets on text editing to avoid reverting newer text through an old canvas snapshot. Text fields use the browser's native Undo; longer-term text recovery uses History. A frame groups enclosed cards when moved, not through persistent parent/child membership.
+
+Limits: 5,000 notes, 150 canvases, 5,000 total canvas objects, 200 attachments, 8 MiB per attachment, 250,000 characters per note, 16 MiB total text/history, 40 MiB native backup. These are safety limits, **not verified scale/performance promises**. See [release verification](docs/RELEASE.md).
+
+## Deploy a static website
+
+```sh
+npm run check
+npm test
+npm run build
+```
+
+Serve `dist/` with any static HTTPS host. All asset paths are relative, including the service worker, so repository-subpath hosting is supported. A Docker configuration is also included. The public web host serves code; each visitor has their own browser-local workspace.
+
+For GitHub Pages: in **Settings → Pages**, set **Source → GitHub Actions**, then run **Actions → Deploy to GitHub Pages → Run workflow**. The workflow is manual; a repository push alone does not prove that a live site exists. Changing from localhost to Pages creates a separate storage origin: transfer your full JSON backup explicitly.
+
+The service worker activates a new shell after old tabs close. If an update is waiting, save, close all app tabs, and reopen. Cache versions must be bumped when runtime assets change. Never clear site storage casually to update the app.
+
+## Tests
+
+```sh
+npm run check
+npm test
+npm run build
+# Optional browser tests (run server in another terminal):
+python -m pip install playwright==1.57.0
+python -m playwright install chromium
+python tests/browser_test.py
+```
+
+CI performs syntax checks, domain/security tests, a static build and real Chromium E2E tests (IndexedDB reload, stale-write rejection, backup restore and offline reload). It uploads browser screenshots and a JSON test report as artifacts. A configured test is not automatically a passing test; check the actual Actions result for your commit.
+
+## License
+
+Original application code: MIT. No third-party runtime dependencies or bundled font files. GitHub Actions and optional testing tools retain their own licenses. See [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

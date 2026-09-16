@@ -1,10 +1,14 @@
-# Private/runtime material must never be committed with these specifications.
+node_modules/
+dist/
 .env
 .env.*
 !.env.example
-credentials/
-secrets/
-private-data/
-exports-private/
-node_modules/
 .DS_Store
+*.log
+playwright-report/
+test-results/
+__pycache__/
+.pytest_cache/
+*.db
+*.sqlite*
+backups/
