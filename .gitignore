@@ -1,0 +1,10 @@
+# Private/runtime material must never be committed with these specifications.
+.env
+.env.*
+!.env.example
+credentials/
+secrets/
+private-data/
+exports-private/
+node_modules/
+.DS_Store

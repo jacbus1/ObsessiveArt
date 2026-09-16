@@ -1,0 +1,16 @@
+{
+  "project": "ObsessiveArt",
+  "repository": "jacbus1/ObsessiveArt",
+  "research_review_date": "2026-09-15",
+  "artifact_type": "research_and_specification_only",
+  "application_implemented": false,
+  "production_ready": false,
+  "deployment_performed": false,
+  "proposed_acceptance_cases": 50,
+  "application_tests_run": 0,
+  "source_records": 38,
+  "private_workspace_data_included": false,
+  "publication_evidence": "Git commit history; publishing documentation is not an application release",
+  "baseline": "Latest Obsidian-Miro-Heptabase_Research_Specs_2026-09-15.zip",
+  "first_implementation_milestone": "One note, two boards, graph navigation, offline persistence and native export/restore"
+}

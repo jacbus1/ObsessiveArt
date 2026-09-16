@@ -1,0 +1,76 @@
+{
+  "artifact_type": "research_and_specification_only",
+  "project": "ObsessiveArt",
+  "as_of": "2026-09-15",
+  "proposed_test_cases": 50,
+  "application_tests_run": 0,
+  "source_records": 38,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 181,
+      "sha256": "401421c47ecfbbbe600622d24328d988d2e7e673977971f7342f86743b059291"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4545,
+      "sha256": "7ff0ed2f778c201b4205d41321c646bf8d419758938f9d8e80dab8dbe890fd95"
+    },
+    {
+      "path": "README.zh-Hant.md",
+      "bytes": 2624,
+      "sha256": "60574c507e1e594d07cca1308033993fa4c6473bd28d6ca36c9c91b5373c6f85"
+    },
+    {
+      "path": "STATUS.json",
+      "bytes": 704,
+      "sha256": "4305809ddf4e806d440065a8b664934fe447f8828292391ba3974789f144bd30"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "bytes": 13041,
+      "sha256": "7c729250abaeabb4601aa7783ee6ce0f8fda2e964da6424abe27664c3094c458"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_BACKLOG.md",
+      "bytes": 5000,
+      "sha256": "25c587842dcea85ba4f284e9a1ae89a676b7248ddcde625fddf2e3c8f7bfed35"
+    },
+    {
+      "path": "docs/INTERCHANGE.md",
+      "bytes": 8468,
+      "sha256": "8a6357e092907a221e5b2ad27d4f3781fdb50de0da3cc5839ecec8dfc8ba6644"
+    },
+    {
+      "path": "docs/LICENSE_REVIEW.md",
+      "bytes": 2775,
+      "sha256": "eb064b4df99f9eb5e88226ed24bb18dcb2181be0031a57b05ffe47bad957486b"
+    },
+    {
+      "path": "docs/PRODUCTION_GATES.md",
+      "bytes": 8811,
+      "sha256": "2608287bb67c2f7aeec65a21c914d772444dcf7220b1fa8e0a3d5533c2591489"
+    },
+    {
+      "path": "docs/RESEARCH.zh-Hant.md",
+      "bytes": 17725,
+      "sha256": "d3ffc943e5a80bcf42f246e6ab60fd8403ed8da8a5c587d3d33fb2e07bd8d1c8"
+    },
+    {
+      "path": "docs/SOURCES.md",
+      "bytes": 10606,
+      "sha256": "6f593d4ca9c4ed322a9900eedbde434a319b5d7b68fe36d9898786fe5221f75f"
+    },
+    {
+      "path": "specs/acceptance-cases.json",
+      "bytes": 16722,
+      "sha256": "9edfcb34ae719131d687c9e59c3e068d09204988fce0c32bef68c137d3282b88"
+    },
+    {
+      "path": "specs/sources.json",
+      "bytes": 14120,
+      "sha256": "3f3c82664e4c838391dd3fbe883d1653f001ab6a34c92aff01c2f88939f69e58"
+    }
+  ],
+  "tracked_payload_files": 13
+}

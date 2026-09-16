@@ -1,0 +1,457 @@
+{
+  "specification_version": "0.1",
+  "status": "proposed_not_executed",
+  "review_date": "2026-09-15",
+  "cases": [
+    {
+      "id": "D01",
+      "area": "Domain",
+      "name": "One note, multiple placements",
+      "scenario": "Create one note and place it on two boards; edit from either view.",
+      "expected": "Both views show the same note revision; no duplicated canonical body.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "D02",
+      "area": "Domain",
+      "name": "Remove placement only",
+      "scenario": "Remove one placement and reload all views.",
+      "expected": "The note, other placement and knowledge relations remain intact.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "D03",
+      "area": "Domain",
+      "name": "Explicit independent duplicate",
+      "scenario": "Duplicate a note as independent, then edit the original.",
+      "expected": "A new note ID exists; its content no longer follows the original.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "D04",
+      "area": "Domain",
+      "name": "Rename and duplicate titles",
+      "scenario": "Create duplicate titles, rename and move projected paths.",
+      "expected": "Stable-ID links remain correct; ambiguous imported titles are reported.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "D05",
+      "area": "Domain",
+      "name": "Visual vs semantic edges",
+      "scenario": "Create a layout arrow, then explicitly promote another to a supported relation.",
+      "expected": "Only the explicit relation enters the semantic graph; source evidence is preserved.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "D06",
+      "area": "Domain",
+      "name": "Graph layout isolation",
+      "scenario": "Recompute the knowledge graph layout.",
+      "expected": "Manually arranged board coordinates remain unchanged.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "D07",
+      "area": "Domain",
+      "name": "Trash reference behavior",
+      "scenario": "Trash a note used by multiple placements; inspect boards and restore.",
+      "expected": "Clear tombstone state, no accidental resurrection; restore preserves references.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "E01",
+      "area": "Editing",
+      "name": "Chinese IME composition",
+      "scenario": "Edit CJK text with composition, selection, paste and undo in note and board modes.",
+      "expected": "No duplicated/dropped composition text; caret and committed content match.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "E02",
+      "area": "Editing",
+      "name": "Collaborative undo",
+      "scenario": "Two users interleave edits; one user undoes their own change.",
+      "expected": "Other user changes remain; undo behavior matches the declared policy.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "E03",
+      "area": "Editing",
+      "name": "Schema mismatch",
+      "scenario": "Connect an old client with an unsupported document schema.",
+      "expected": "Safe refusal or documented migration; no silent content loss.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "E04",
+      "area": "Editing",
+      "name": "Keyboard alternative",
+      "scenario": "Navigate and operate board content without a pointer.",
+      "expected": "All critical actions available through focusable controls/list alternatives.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "S01",
+      "area": "Sync",
+      "name": "Two-device offline merge",
+      "scenario": "Both devices edit offline, then reconnect in different orders.",
+      "expected": "Document state converges under the declared semantic conflict policies.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "S02",
+      "area": "Sync",
+      "name": "Duplicate/out-of-order updates",
+      "scenario": "Inject retries and shuffled updates with the same operation IDs.",
+      "expected": "No duplicated content/commands; consistent final state.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "S03",
+      "area": "Sync",
+      "name": "Crash after durable receipt",
+      "scenario": "Obtain server-durable receipt, terminate process and restart.",
+      "expected": "Every acknowledged committed update survives the tested failure.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "S04",
+      "area": "Sync",
+      "name": "Storage failure before receipt",
+      "scenario": "Fail database writes or fill the persistence volume.",
+      "expected": "No false server-saved state; locally persisted pending edits remain recoverable.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "S05",
+      "area": "Sync",
+      "name": "Cross-document partial failure",
+      "scenario": "Interrupt create-note-and-place between document commits.",
+      "expected": "Recovery completes or compensates deterministically without hidden orphan state.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "S06",
+      "area": "Sync",
+      "name": "Offline edit after revocation",
+      "scenario": "Revoke membership while a client is offline, then reconnect with edits.",
+      "expected": "Server rejects unauthorized writes; local content is quarantined/exportable with clear messaging.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "S07",
+      "area": "Sync",
+      "name": "Old offline client and tombstones",
+      "scenario": "Replay old changes after deletion/retention boundaries.",
+      "expected": "No unapproved resurrection; controlled resync or recovery path.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "O01",
+      "area": "Offline",
+      "name": "Restart offline",
+      "scenario": "Persist edits and required assets, close browser, reopen offline.",
+      "expected": "Available content reopens; unavailable assets are labeled, never represented as loaded.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "O02",
+      "area": "Offline",
+      "name": "Quota/persistence error",
+      "scenario": "Simulate local storage write rejection and insufficient quota.",
+      "expected": "Visible save failure, recovery/export path and no false local-saved status.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "O03",
+      "area": "Offline",
+      "name": "Account cache isolation",
+      "scenario": "Log out and switch accounts with cached private content.",
+      "expected": "No cross-account cache access; unsynced-edit handling follows explicit user choice.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "A01",
+      "area": "Authorization",
+      "name": "Viewer cannot write",
+      "scenario": "Issue direct API and WebSocket writes as viewer.",
+      "expected": "Server denies writes even if frontend controls are modified.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "A02",
+      "area": "Authorization",
+      "name": "Cross-workspace identifiers",
+      "scenario": "Use another workspace ID for document joins, placements and asset requests.",
+      "expected": "All entry points deny access; no body/title/thumbnail/metadata leaks.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "A03",
+      "area": "Authorization",
+      "name": "Revoked live session",
+      "scenario": "Revoke an active editor and reuse existing tokens/connections.",
+      "expected": "Access blocked within declared revocation policy; active connections handled.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "A04",
+      "area": "Authorization",
+      "name": "Search/export/AI filtering",
+      "scenario": "Search, export and request AI context with forbidden entities.",
+      "expected": "No unauthorized text, filenames, counts, backlinks or citations disclosed.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "A05",
+      "area": "Authorization",
+      "name": "Forged awareness identity",
+      "scenario": "Send another user ID/name via presence payload.",
+      "expected": "Server identity remains authoritative in UI and logs.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "I01",
+      "area": "Interchange",
+      "name": "Obsidian supported subset",
+      "scenario": "Round-trip versioned fixtures with wikilinks, frontmatter, Unicode and reused attachments.",
+      "expected": "Documented subset preserved; unsupported syntax reported and retained appropriately.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "I02",
+      "area": "Interchange",
+      "name": "Native archive round trip",
+      "scenario": "Export and restore into a clean workspace.",
+      "expected": "IDs, content, geometry, relations, source anchors and asset hashes match the contract.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "I03",
+      "area": "Interchange",
+      "name": "Corrupt/truncated archive",
+      "scenario": "Import damaged files, broken hashes and unknown schema versions.",
+      "expected": "Safe rejection; no untracked partially visible workspace.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "I04",
+      "area": "Interchange",
+      "name": "Miro unsupported types",
+      "scenario": "Import authorized fixtures containing supported and unsupported provider items.",
+      "expected": "No silent skipping; unsupported report and readable fallback are accurate.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "I05",
+      "area": "Interchange",
+      "name": "Heptabase missing anchors",
+      "scenario": "Import CLI-like highlights without source ID/page/regions.",
+      "expected": "No invented source mapping; migration is marked incomplete for those anchors.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "I06",
+      "area": "Interchange",
+      "name": "Repeat/cancel import",
+      "scenario": "Retry and cancel a partially staged import job.",
+      "expected": "Idempotent outcomes, consistent visibility and documented cleanup.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "P01",
+      "area": "Provenance",
+      "name": "Changed source file",
+      "scenario": "Replace or update an annotated source revision.",
+      "expected": "Old anchors remain tied to old hash or are marked stale; no silent reassignment.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "P02",
+      "area": "Provenance",
+      "name": "Quote vs generated interpretation",
+      "scenario": "Create a quote, user note and AI proposal from the same source.",
+      "expected": "Type and provenance distinguish all three; only evidence-backed links marked verified.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "X01",
+      "area": "Security",
+      "name": "HTML/SVG injection",
+      "scenario": "Import hostile active content into notes and assets.",
+      "expected": "No script execution or credential exfiltration; safe supported fallback.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "X02",
+      "area": "Security",
+      "name": "Archive traversal and bombs",
+      "scenario": "Use absolute/relative escaping paths, symlinks, huge expansion and excessive nesting.",
+      "expected": "Bounded, safe rejection and no writes outside staging.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "X03",
+      "area": "Security",
+      "name": "SSRF and redirects",
+      "scenario": "Attempt remote fetches into loopback/private/metadata destinations and redirect chains.",
+      "expected": "Destination/redirect controls reject forbidden requests under the declared egress policy.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "X04",
+      "area": "Security",
+      "name": "WebSocket origin/rate/size",
+      "scenario": "Use untrusted origin, expired session, oversized messages and excessive requests.",
+      "expected": "Connection/message checks and resource bounds enforced.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "X05",
+      "area": "Security",
+      "name": "Secrets and audit logs",
+      "scenario": "Build artifacts and execute auth/import/AI errors using test secrets.",
+      "expected": "No secrets or private bodies in bundles, logs or public fixtures.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "R01",
+      "area": "Recovery",
+      "name": "Independent backup restore",
+      "scenario": "Restore DB and referenced assets in a separate clean environment.",
+      "expected": "Counts, hashes, references and measured recovery time/point are recorded.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "R02",
+      "area": "Recovery",
+      "name": "Upgrade failure recovery",
+      "scenario": "Fail a schema upgrade on a prior-version backup fixture.",
+      "expected": "Supported recovery process restores access without silent data destruction.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "V01",
+      "area": "Visual",
+      "name": "HTML overlay export",
+      "scenario": "Export a board containing rich HTML-edited cards, connectors, CJK text and images.",
+      "expected": "No missing card bodies; alignment, wrapping and supported text remain correct.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "V02",
+      "area": "Visual",
+      "name": "Coordinate alignment",
+      "scenario": "Pan/zoom at different device pixel ratios and browser zoom levels.",
+      "expected": "Pointer hit-testing, editor overlays, selection and export share consistent positions.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "V03",
+      "area": "Visual",
+      "name": "Mobile touch workflow",
+      "scenario": "Collect, search, edit, pan and pinch on recorded target phones/tablets.",
+      "expected": "No accidental destructive gestures; keyboard and focus remain usable.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "L01",
+      "area": "Load",
+      "name": "10,000-note search fixture",
+      "scenario": "Run a documented mixed CJK/English query set on fixed reference hardware.",
+      "expected": "Proposed warm-search p95 <= 300 ms; report all measurements and indexing assumptions.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "L02",
+      "area": "Load",
+      "name": "Desktop 1,000-object board",
+      "scenario": "Pan/zoom a documented mixed board with viewport culling.",
+      "expected": "Proposed sustained >=30 fps during defined interaction; report p95 frame time/memory, not just averages.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "L03",
+      "area": "Load",
+      "name": "Mobile 250-object board",
+      "scenario": "Run a fixed mixed-object scenario on an identified phone/browser.",
+      "expected": "Functional interaction without crashes; record memory/latency before setting a shipping threshold.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "L04",
+      "area": "Load",
+      "name": "Ten collaborators",
+      "scenario": "Run ten editors on one board under specified 100 ms round-trip network conditions.",
+      "expected": "Proposed p95 visible propagation <=500 ms; consistency and durable receipts separately verified.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "AI01",
+      "area": "AI",
+      "name": "Prompt injection and action approval",
+      "scenario": "Import instructions that request broader access, then ask an AI to summarize selected content.",
+      "expected": "No expanded permissions or automatic commands; only approved scoped edits can commit.",
+      "status": "not_run",
+      "evidence": null
+    },
+    {
+      "id": "AI02",
+      "area": "AI",
+      "name": "Unconfigured provider and limits",
+      "scenario": "Disable AI or trigger timeout/cost-limit/cancellation conditions.",
+      "expected": "Core app remains functional; proposal state and billed/unknown usage are honest.",
+      "status": "not_run",
+      "evidence": null
+    }
+  ]
+}
