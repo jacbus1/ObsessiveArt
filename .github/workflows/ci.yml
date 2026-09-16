@@ -25,7 +25,10 @@ jobs:
         run: |
           node server.mjs > /tmp/obsessiveart.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/healthz && break || sleep 1; done
-      - run: python tests/browser_test.py
+      - name: Existing application regression tests
+        run: python tests/browser_test.py
+      - name: English-first and language preservation tests
+        run: python tests/english_browser_test.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

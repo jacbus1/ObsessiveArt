@@ -34,28 +34,81 @@ export function remember(note) {
   }
 }
 export function blankWorkspace() {
-  return {format: 'obsessiveart', schema: VERSION, id: uid(), name: 'My knowledge studio', notes: [], boards: [createBoard('First canvas')], attachments: [], settings: {language: 'zh', theme: 'light'}};
+  return {format: 'obsessiveart', schema: VERSION, id: uid(), name: 'My knowledge studio', notes: [], boards: [createBoard('First canvas')], attachments: [], settings: {language: 'en', theme: 'light'}};
 }
 export function seedWorkspace() {
   const ws = blankWorkspace();
   ws.name = 'My knowledge studio';
   const content = [
-    ['welcome', '從靈感，到理解', '# 歡迎來到 ObsessiveArt\n\n這是你可以真正編輯的示範工作區，不是靜態展示。\n\n## 一份內容，三種視角\n- **筆記**：把概念寫清楚。\n- **白板**：攤開想法、安排位置、畫出關係。\n- **圖譜**：沿著 `[[雙向連結]]` 探索。\n\n試試雙擊白板上的卡片；修改這篇筆記，再切換到第二塊白板。內容只有一份，位置各自獨立。\n\n[[pca|PCA：找出資料的主軸]] · [[workflow|我的研究工作流]]\n\n> 內容保存在目前瀏覽器。請定期在「資料與設定」下載完整備份；清除網站資料會移除本機內容。', ['入門', '工作區'], 'violet'],
-    ['pca', 'PCA · 找出資料的主軸', '# Principal Component Analysis\n\nPCA 將資料投影到新的正交座標軸，依序捕捉最大的變異。\n\n## 思考順序\n1. 視情況標準化資料。\n2. 尋找變異最大的方向。\n3. 決定保留多少個主成分。\n4. 回看資訊損失與解釋性。\n\n與 [[svd|SVD]] 有密切關係；也可以和 [[clustering|K-means]] 放在同一塊白板比較。\n\n**自己問自己**：高變異是否一定等於有用的訊號？', ['機器學習', '降維'], 'blue'],
-    ['svd', 'SVD · 矩陣的另一種視角', '# Singular Value Decomposition\n\n`A = U Σ Vᵀ`\n\n把矩陣拆成方向與尺度，有助理解低秩近似。\n\n- U：左奇異向量。\n- Σ：奇異值。\n- V：右奇異向量。\n\n中心化資料的 SVD 可以用來計算 [[pca|PCA]]。\n\n## 待探索\n比較不同保留維度的重建誤差。', ['線性代數', '降維'], 'violet'],
-    ['clustering', 'K-means · 發現群組', '# 從相似性找出群組\n\nK-means 反覆分配樣本與更新中心，以減少群內平方距離。\n\n- 初始化會影響結果。\n- 特徵尺度會影響距離。\n- 群組不一定對應現實分類。\n\n可以在 [[pca|PCA]] 投影上視覺化，但視覺上的分離不等於完整證據。', ['機器學習', '分群'], 'green'],
-    ['workflow', '我的研究工作流', '# 讓資料變成自己的理解\n\n1. 收集來源。\n2. 用自己的話寫下一個概念。\n3. 把卡片放到白板比較。\n4. 用 `[[標題]]` 或連結選單連到其他筆記。\n5. 記錄疑問，而不是只收集結論。\n\n[[question|一個值得追問的問題]]\n\n> 白板箭頭是排版關係；筆記內連結才會進入知識圖譜。', ['研究方法'], 'amber'],
-    ['question', '一個值得追問的問題', '# 我真的理解了嗎？\n\n- 我能不用術語解釋嗎？\n- 我能舉出反例嗎？\n- 這個結論適用於什麼條件？\n- 下一步可以怎樣驗證？\n\n回到 [[workflow|研究工作流]]，讓每個問題都有去向。', ['思考', '研究方法'], 'rose']
-  ];
+    [
+        "welcome",
+        "From ideas to understanding",
+        "# Welcome to ObsessiveArt\n\nThis is an editable example workspace, not a static demonstration.\n\n## One idea, three views\n- **Notes**: put a concept into your own words.\n- **Canvas**: arrange ideas, compare them and draw connections.\n- **Graph**: explore through `[[wikilinks]]`.\n\nDouble-click a card to edit it, then open the second canvas. The note is shared; each placement stays independent.\n\n[[pca|PCA: finding the main directions]] · [[workflow|My research workflow]]\n\n> Your content stays in this browser. Download a full backup from Data & settings regularly. Clearing site data removes local content.",
+        [
+            "Getting started",
+            "Workspace"
+        ],
+        "violet"
+    ],
+    [
+        "pca",
+        "PCA · Finding the main directions",
+        "# Principal Component Analysis\n\nPCA projects data onto orthogonal axes that successively capture the greatest variance.\n\n## A useful sequence\n1. Decide whether the features need scaling.\n2. Find the directions with the greatest variance.\n3. Choose how many components to retain.\n4. Review information loss and interpretability.\n\nPCA is closely related to [[svd|SVD]]. Compare it with [[clustering|K-means]] on the same canvas.\n\n**Ask yourself**: does high variance always mean useful signal?",
+        [
+            "Machine learning",
+            "Dimensionality reduction"
+        ],
+        "blue"
+    ],
+    [
+        "svd",
+        "SVD · Another view of a matrix",
+        "# Singular Value Decomposition\n\n`A = U Σ Vᵀ`\n\nSeparate a matrix into directions and scales to understand low-rank approximations.\n\n- U: left singular vectors.\n- Σ: singular values.\n- V: right singular vectors.\n\nThe SVD of centered data can be used to compute [[pca|PCA]].\n\n## Explore next\nCompare reconstruction errors at different retained dimensions.",
+        [
+            "Linear algebra",
+            "Dimensionality reduction"
+        ],
+        "violet"
+    ],
+    [
+        "clustering",
+        "K-means · Discovering groups",
+        "# Find groups through similarity\n\nK-means alternates between assigning observations and updating centers to reduce within-cluster squared distances.\n\n- Initialization can affect the result.\n- Feature scales affect distances.\n- Clusters do not necessarily represent real-world categories.\n\nUse a [[pca|PCA]] projection for visualization, but do not treat visual separation as complete evidence.",
+        [
+            "Machine learning",
+            "Clustering"
+        ],
+        "green"
+    ],
+    [
+        "workflow",
+        "My research workflow",
+        "# Turn information into understanding\n\n1. Collect the original source.\n2. Write one concept in your own words.\n3. Compare cards on a canvas.\n4. Connect notes with `[[a title]]` or Insert note link.\n5. Keep open questions, not just conclusions.\n\n[[question|A question worth pursuing]]\n\n> Canvas arrows are visual connectors. Only links inside notes appear in the knowledge graph.",
+        [
+            "Research methods"
+        ],
+        "amber"
+    ],
+    [
+        "question",
+        "A question worth pursuing",
+        "# Do I really understand it?\n\n- Can I explain it without jargon?\n- Can I give a counterexample?\n- Under what conditions does the conclusion hold?\n- How could I test it next?\n\nReturn to [[workflow|the research workflow]] and give every question a next step.",
+        [
+            "Thinking",
+            "Research methods"
+        ],
+        "rose"
+    ]
+];
   ws.notes = content.map(([id,title,text,tags,color]) => ({...createNote(title,text), id, tags, color, pinned: id === 'welcome'}));
   const board = ws.boards[0]; board.title = 'Learning, connected'; board.camera = {x: 40, y: 35, z: .86};
   const positions = [[60,60],[410,60],[770,60],[410,355],[60,355],[770,355]];
   ws.notes.forEach((n,i) => {const p = placeNote(board,n.id,...positions[i]); p.color = n.color;});
   const edge = (a,b,label) => board.edges.push({id:uid(),from:board.nodes[a].id,to:board.nodes[b].id,label});
-  edge(0,1,'探索'); edge(1,2,'理解結構'); edge(1,3,'比較'); edge(4,5,'追問');
-  const second = createBoard('Linear algebra · 同一卡片');
+  edge(0,1,'Explore'); edge(1,2,'Understand structure'); edge(1,3,'Compare'); edge(4,5,'Ask why');
+  const second = createBoard('Linear algebra · Shared notes');
   placeNote(second,'pca',70,90); placeNote(second,'svd',460,90);
-  second.edges.push({id:uid(),from:second.nodes[0].id,to:second.nodes[1].id,label:'共用筆記，獨立位置'});
+  second.edges.push({id:uid(),from:second.nodes[0].id,to:second.nodes[1].id,label:'Shared notes, independent placements'});
   ws.boards.push(second);
   return ws;
 }
