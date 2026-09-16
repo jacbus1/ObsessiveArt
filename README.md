@@ -12,7 +12,7 @@ Open **[jacbus1.github.io/ObsessiveArt](https://jacbus1.github.io/ObsessiveArt/)
 
 Double-click the sample **PCA** card, change its text, then switch to the second canvas. The same note appears there with the updated content and an independent position. Reload to check persistence. Use **Data & settings → Full backup** before storing important information.
 
-The initial sample notes are in Traditional Chinese. Switch the interface to English in **Data & settings → Language**. Changing interface language does not translate your notes.
+New workspaces now start with an **English interface and English sample notes**. Existing workspaces retain their selected language and all personal content. Switch the interface in **Data & settings / 資料與設定 → Language / 語言 → English**. Changing interface language does not translate your notes. See the [English update](docs/ENGLISH_RELEASE.md) and [verified QA/publication evidence](docs/ENGLISH_QA_VERIFIED.md).
 
 ## Feature tour
 
@@ -98,11 +98,12 @@ npm run build
 python -m pip install playwright==1.57.0
 python -m playwright install chromium
 python tests/browser_test.py
+python tests/english_browser_test.py
 # Recreate the documentation screenshots:
 python tools/capture_readme.py
 ```
 
-CI checks syntax, runs domain/security tests, builds the static site and executes real Chromium tests covering reload persistence, stale-write rejection, backup restore and offline reload. Read the [actual Actions results](https://github.com/jacbus1/ObsessiveArt/actions); configuration alone is not proof that tests passed.
+CI checks syntax, runs domain/security tests, builds the static site and executes real Chromium tests covering reload persistence, stale-write rejection, backup restore and offline reload. The English-first update passed **42 Node tests and 22 Chromium flow checks**; see [verified QA/publication evidence](docs/ENGLISH_QA_VERIFIED.md) for the exact commits, runs and limitations. Independent AI sub-agent review was not executed. Read the [actual Actions results](https://github.com/jacbus1/ObsessiveArt/actions) for later commits; configuration alone is not proof that tests passed.
 
 The Pages workflow automatically runs on relevant application and deployment-file changes pushed to `main`; manual dispatch is also available. It tests the application before publication, deploys `dist/`, and checks the published HTML and core module over HTTP. These HTTP checks are not a full browser test against the public website.
 
