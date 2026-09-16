@@ -1,7 +1,7 @@
 /* Cache ONLY this app's static shell. IndexedDB user data is not in this cache.
    No skipWaiting: a new shell becomes active after existing tabs close, avoiding
    an old app/new module mismatch. No network requests for user content. */
-const CACHE='obsessiveart-shell-v0.1.0';
+const CACHE='obsessiveart-shell-v0.1.1-en';
 const FILES=['./','./index.html','./style.css','./src/app.js','./src/core.js','./src/storage.js','./assets/icon.svg','./manifest.webmanifest'];
 const urls=new Set(FILES.map(f=>new URL(f,self.registration.scope).href));
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES.map(f=>new URL(f,self.registration.scope).href)))));
